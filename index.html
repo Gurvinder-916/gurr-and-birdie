@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gurr & Birdie ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+
+:root{
+ --pink:#f4d5d2;--rose:#d99d9b;--cream:#f8f0e7;
+ --paper:#fffaf4;--brown:#795d50;--dark:#503b32;
+ --line:#ead9cc;--soft:#f1e3dc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:var(--cream);color:var(--dark);
+ font-family:'DM Sans',sans-serif;overflow-x:hidden;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+h1,h2,h3{font-family:'Playfair Display',serif;font-weight:500}
+h1{font-size:clamp(2.5rem,8vw,5rem);margin:12px 0}
+h2{font-size:clamp(2rem,6vw,3.5rem);margin:10px 0}
+p{line-height:1.8}
+.screen{
+ min-height:100svh;display:none;align-items:center;
+ justify-content:center;padding:25px 16px;
+ position:relative;
+}
+.screen.active{display:flex;animation:appear .8s ease}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.paper{
+ width:min(720px,100%);background:var(--paper);
+ padding:clamp(28px,6vw,65px);
+ border:1px solid var(--line);box-shadow:0 15px 45px #795d5018;
+ position:relative;text-align:center;border-radius:4px;
+}
+.paper:before{content:"";position:absolute;inset:10px;border:1px dashed #e7d5c6;pointer-events:none}
+.small,.label{
+ font-size:11px;letter-spacing:3px;text-transform:uppercase;
+ color:#ae8d7c;
+}
+.note{max-width:550px;margin:22px auto;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.9}
+.btn{
+ border:0;background:var(--brown);color:white;border-radius:30px;
+ padding:14px 30px;margin:8px;transition:.25s;
+}
+.btn:hover{transform:translateY(-3px);background:var(--dark)}
+.btn.soft{background:var(--soft);color:var(--dark)}
+.btn.pink{background:var(--rose)}
+.heart{color:var(--rose);font-size:65px;animation:heartbeat 1.3s infinite}
+@keyframes heartbeat{50%{transform:scale(1.15)}}
+.error{color:#bd7777;font-size:13px;min-height:20px}
+input{
+ width:205px;padding:16px;text-align:center;border:1px solid var(--line);
+ background:white;border-radius:12px;letter-spacing:10px;font-size:22px;
+ color:var(--dark);outline:none;
+}
+.ghost-row{display:flex;justify-content:center;align-items:end;gap:24px;margin:30px auto}
+.ghost{
+ width:88px;height:105px;background:#fff;border-radius:48% 48% 12% 12%;
+ position:relative;box-shadow:0 7px 18px #795d5018;
+ animation:float 3s ease-in-out infinite;
+}
+.ghost:nth-child(2){animation-delay:.7s;background:#f4dedb}
+.ghost:before{content:"••";position:absolute;top:34px;left:27px;letter-spacing:10px;font-size:17px}
+.ghost:after{content:"";position:absolute;top:58px;left:32px;width:25px;height:8px;border-bottom:2px solid var(--rose);border-radius:50%}
+@keyframes float{50%{transform:translateY(-12px)}}
+.bears{font-size:clamp(55px,12vw,95px);display:flex;justify-content:center;gap:12px;margin:25px 0}
+.bear{animation:float 3s infinite}
+.bear:nth-child(2){animation-delay:.5s}
+.sparkle{color:#d8a8a0}
+.confetti{position:fixed;pointer-events:none;inset:0;overflow:hidden;z-index:5}
+.confetti span{position:absolute;top:-20px;animation:fall 5s linear infinite;color:#d99d9b}
+@keyframes fall{to{transform:translateY(110vh) rotate(500deg)}}
+.hug-emoji{font-size:95px;animation:float 2s infinite}
+.miss{font-size:clamp(2rem,7vw,4rem);letter-spacing:4px;color:#b47c7b}
+.memories{
+ min-height:100svh;padding:55px 15px;
+ background:#f3e8de;
+}
+.scrap{width:min(950px,100%);margin:auto}
+.scrap-page{
+ position:relative;background:var(--paper);padding:clamp(25px,5vw,60px);
+ margin:35px auto;box-shadow:0 12px 35px #795d5018;
+ border:1px solid var(--line);text-align:center;
+}
+.tape{position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-2deg);width:100px;height:25px;background:#e8c6b5aa}
+.photo-grid{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:18px;max-width:760px;margin:35px auto;
+}
+.photo{
+ background:#fff;padding:9px 9px 25px;box-shadow:0 4px 13px #795d5020;
+ transform:rotate(var(--rot,2deg));position:relative;
+}
+.photo:nth-child(even){--rot:-2deg}
+.photo img{
+ width:100%;aspect-ratio:1/1;object-fit:cover;
+ display:block;background:#efe3d9;
+}
+.photo small{display:block;padding-top:10px;color:#a68b7d;font-family:'Playfair Display',serif;font-style:italic}
+.heart-collage{
+ width:min(410px,90vw);aspect-ratio:1;margin:35px auto;
+ position:relative;display:grid;grid-template-columns:repeat(4,1fr);
+ grid-template-rows:repeat(4,1fr);gap:5px;
+ clip-path:path("M 200 370 C 180 350 10 240 10 115 C 10 20 130 0 200 80 C 270 0 390 20 390 115 C 390 240 220 350 200 370 Z");
+ overflow:hidden;
+}
+.heart-collage img{width:100%;height:100%;object-fit:cover;min-width:0}
+.final-ghosts{margin:20px auto}
+#answer{min-height:48px;font-family:'Playfair Display',serif;font-size:24px;color:var(--rose)}
+footer{text-align:center;padding:25px;color:#ad9283;font-size:12px}
+@media(max-width:600px){
+ .photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .ghost{width:72px;height:88px}
+ .heart-collage{clip-path:none;border-radius:45% 45% 5% 5%;overflow:hidden}
+}
+</style>
+</head>
+<body>
+
+<div class="confetti" id="confetti"></div>
+
+<!-- 1. PASSWORD -->
+<section class="screen active" id="lock">
+ <div class="paper">
+  <div class="small">a little secret for you</div>
+  <div class="heart">♡</div>
+  <h1>For Birdie</h1>
+  <p>Some memories deserve their own little key.</p>
+  <p class="label">our special date</p>
+  <input id="password" type="password" maxlength="6" inputmode="numeric" placeholder="••••••">
+  <div class="error" id="error"></div>
+  <button class="btn pink" onclick="unlock()">Unlock ♡</button>
+  <p class="small">made with love, by Gurr</p>
+ </div>
+</section>
+
+<!-- 2. SURPRISE -->
+<section class="screen" id="welcome">
+ <div class="paper">
+  <div class="small">pssst... birdie</div>
+  <div class="ghost-row"><div class="ghost"></div><div class="ghost"></div></div>
+  <h1>I made something special for u.</h1>
+  <p>Do you wanna see?</p>
+  <button class="btn pink" onclick="show('intro')">YES!! ♡</button>
+  <button class="btn soft" onclick="noThanks()">NO</button>
+  <div class="error" id="noMessage"></div>
+ </div>
+</section>
+
+<!-- 3. GURR AND BIRDIE -->
+<section class="screen" id="intro">
+ <div class="paper">
+  <div class="small">once upon a little love story</div>
+  <div class="ghost-row"><div class="ghost"></div><div class="ghost"></div></div>
+  <h1>Gurr & Birdie</h1>
+  <p class="note">Two little ghosts who found their way into each other's worlds. And somehow, everything became a little warmer.</p>
+  <button class="btn" onclick="show('anniversary')">Our little world ♡</button>
+ </div>
+</section>
+
+<!-- 4. ANNIVERSARY BEARS -->
+<section class="screen" id="anniversary">
+ <div class="paper">
+  <div class="small">a tiny celebration</div>
+  <div class="bears"><span class="bear">🧸</span><span class="bear">🧸</span></div>
+  <h1>Happy Anniversary!</h1>
+  <p class="note">To us. To every laugh, every little conversation, every silly moment, and every memory we are still going to make.</p>
+  <div class="heart">♡</div>
+  <button class="btn" onclick="show('wish')">A wish for you...</button>
+ </div>
+</section>
+
+<!-- 5. WISH -->
+<section class="screen" id="wish">
+ <div class="paper">
+  <div class="small">from the bottom of my heart</div>
+  <h1>MY WISH FOR U</h1>
+  <div class="heart">♡</div>
+  <p class="note">I wish you happiness on the days that feel easy, strength on the days that don't, and a thousand little reasons to smile. I hope life is always gentle with you. And wherever life takes us, I hope you never forget how special you are to me.</p>
+  <button class="btn" onclick="show('hug')">Come here 🥺</button>
+ </div>
+</section>
+
+<!-- 6. HUG -->
+<section class="screen" id="hug">
+ <div class="paper">
+  <div class="small">a hug from far away</div>
+  <div class="hug-emoji">🫂</div>
+  <h1>Come closer...</h1>
+  <p class="note">Consider this the biggest hug ever. The kind where I don't let go too quickly.</p>
+  <button class="btn pink" onclick="show('miss')">One more thing ♡</button>
+ </div>
+</section>
+
+<!-- 7. I MISS YOU -->
+<section class="screen" id="miss">
+ <div class="paper">
+  <div class="small">a little confession</div>
+  <div class="heart">♡</div>
+  <h1 class="miss">I MISS YOU</h1>
+  <p class="note">More than these little words could ever explain. I wish I could be right beside you.</p>
+  <button class="btn" onclick="show('memories')">Let's remember us ♡</button>
+ </div>
+</section>
+
+<!-- 8. PHOTO COLLAGE + SCRAPBOOK -->
+<section class="memories screen" id="memories">
+ <div class="scrap">
+  <div class="scrap-page">
+   <div class="tape"></div>
+   <div class="label">our memories</div>
+   <h2>Little pieces of us ♡</h2>
+   <p class="note">If I could collect all my favourite moments, they would look a little something like this.</p>
+   <div class="heart-collage">
+    <img src="photos/1.jpg" alt="Memory">
+    <img src="photos/2.jpg" alt="Memory">
+    <img src="photos/3.jpg" alt="Memory">
+    <img src="photos/5.jpg" alt="Memory">
+    <img src="photos/6.jpg" alt="Memory">
+    <img src="photos/7.jpg" alt="Memory">
+    <img src="photos/8.jpg" alt="Memory">
+    <img src="photos/9.jpg" alt="Memory">
+    <img src="photos/10.jpg" alt="Memory">
+    <img src="photos/12.jpg" alt="Memory">
+    <img src="photos/13.jpg" alt="Memory">
+    <img src="photos/14.jpg" alt="Memory">
+   </div>
+   <p class="note">Every picture has a little piece of my heart in it.</p>
+  </div>
+
+  <div class="scrap-page">
+   <div class="tape"></div>
+   <div class="label">kept close, always</div>
+   <h2>Our little scrapbook</h2>
+   <p class="note">Some moments are too precious to leave in a camera roll. So here's a little place for them.</p>
+   <div class="photo-grid">
+    <div class="photo"><img src="photos/1.jpg" alt="Memory 1"><small>♡</small></div>
+    <div class="photo"><img src="photos/2.jpg" alt="Memory 2"><small>♡</small></div>
+    <div class="photo"><img src="photos/3.jpg" alt="Memory 3"><small>♡</small></div>
+    <div class="photo"><img src="photos/5.jpg" alt="Memory 5"><small>♡</small></div>
+    <div class="photo"><img src="photos/6.jpg" alt="Memory 6"><small>♡</small></div>
+    <div class="photo"><img src="photos/7.jpg" alt="Memory 7"><small>♡</small></div>
+    <div class="photo"><img src="photos/8.jpg" alt="Memory 8"><small>♡</small></div>
+    <div class="photo"><img src="photos/9.jpg" alt="Memory 9"><small>♡</small></div>
+    <div class="photo"><img src="photos/10.jpg" alt="Memory 10"><small>♡</small></div>
+    <div class="photo"><img src="photos/12.jpg" alt="Memory 12"><small>♡</small></div>
+    <div class="photo"><img src="photos/13.jpg" alt="Memory 13"><small>♡</small></div>
+    <div class="photo"><img src="photos/14.jpg" alt="Memory 14"><small>♡</small></div>
+   </div>
+   <p class="note">And these are only a few of the memories I want to keep forever.</p>
+   <button class="btn" onclick="show('question')">One last question...</button>
+  </div>
+ </div>
+</section>
+
+<!-- 9. FINAL -->
+<section class="screen" id="question">
+ <div class="paper">
+  <div class="small">for my favourite person</div>
+  <div class="ghost-row final-ghosts"><div class="ghost"></div><div class="ghost"></div></div>
+  <h1>Will you be mine?</h1>
+  <p class="note">Today, tomorrow, and in all the little moments in between. ♡</p>
+  <button class="btn pink" onclick="answerYes()">YES ♡</button>
+  <button class="btn soft" onclick="answerNo()">NO</button>
+  <div id="answer"></div>
+ </div>
+</section>
+
+<footer>made with love ♡ Gurr & Birdie</footer>
+
+<script>
+function show(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function unlock(){
+ const pass=document.getElementById('password').value;
+ if(pass==='070426'){
+  document.getElementById('error').textContent='';
+  show('welcome');
+ }else{
+  document.getElementById('error').textContent='Oops! Try our special date again ♡';
+ }
+}
+document.getElementById('password').addEventListener('keydown',e=>{
+ if(e.key==='Enter')unlock();
+});
+function noThanks(){
+ document.getElementById('noMessage').textContent='Hehe, are you sure? Give it another try 🥺';
+}
+function answerYes(){
+ document.getElementById('answer').textContent='YAY!! I love you, Birdie. ♡';
+ const c=document.getElementById('confetti');
+ for(let i=0;i<45;i++){
+  const s=document.createElement('span');
+  s.textContent=['♡','✦','♥'][i%3];
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDelay=Math.random()*3+'s';
+  s.style.fontSize=(12+Math.random()*20)+'px';
+  c.appendChild(s);
+ }
+}
+function answerNo(){
+ document.getElementById('answer').textContent='A little smile from Gurr, anyway. ♡';
+}
+</script>
+</body>
+</html>
